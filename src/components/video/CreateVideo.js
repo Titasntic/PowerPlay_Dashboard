@@ -465,15 +465,22 @@ const CreateVideo = ({ handleClose, videoAlert }) => {
               error={errors.duration ? true : false}
               helperText={errors.duration}
             />
-            <TextField
-              id="promotion"
-              label="promotion"
-              sx={{ my: 2 }}
-              value={values.promotion}
-              onChange={handleChange("promotion")}
-              error={errors.promotion ? true : false}
-              helperText={errors.promotion}
-            />
+            <FormControl variant="outlined" sx={{ my: 2 }}>
+              <InputLabel id="promotion">Promotion</InputLabel>
+              <Select
+                  labelId="promotion"
+                  value={values.promotion}
+                  label="Promotion"
+                  onChange={handleChange("promotion")}
+                  error={errors.promotion ? true : false}
+              >
+                <MenuItem value="true">Yes</MenuItem>
+                <MenuItem value="false">No</MenuItem>
+              </Select>
+              {errors.promotion && (
+                  <FormHelperText error>{errors.promotion}</FormHelperText>
+              )}
+            </FormControl>
             <FormControl variant="outlined" sx={{ my: 2 }}>
               <InputLabel id="sub_type">Sub type</InputLabel>
               <Select

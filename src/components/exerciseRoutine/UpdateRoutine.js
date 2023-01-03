@@ -14,8 +14,8 @@ import {
 } from "@mui/material";
 import { Box } from "@mui/system";
 import { validateSDL } from "graphql/validation/validate";
-import { useState } from "react";
-import { CREATE_EXE_ROUTINE } from "../../gql/exeRoutine";
+import {useEffect, useState} from "react";
+import {CREATE_EXE_ROUTINE, UPDATE_EXE_ROUTINE} from "../../gql/exeRoutine";
 
 const UpdateRoutine = ({ handleClose, routineAlert, value }) => {
   const [values, setValues] = useState({
@@ -40,11 +40,125 @@ const UpdateRoutine = ({ handleClose, routineAlert, value }) => {
   });
   const [loading, setLoading] = useState(false);
 
+  const [updateRoutine] = useMutation(UPDATE_EXE_ROUTINE, {
+      onError: (error) => {
+          console.log("error:", error);
+          setLoading(false);
+      },
+      onCompleted: (data) => {
+          setValues({
+              exercise_routine_name: "",
+              day_1: "",
+              day_2: "",
+              day_3: "",
+              day_4: "",
+              day_5: "",
+              day_6: "",
+              day_7: "",
+          });
+          setErrors({
+              exercise_routine_name: "",
+              day_1: "",
+              day_2: "",
+              day_3: "",
+              day_4: "",
+              day_5: "",
+              day_6: "",
+              day_7: "",
+          });
+          setLoading(false);
+          routineAlert("Routine has been updated");
+          handleUpdateClose();
+      }
+  })
+
+  useEffect(() => {
+      setValues(value);
+  }, [value])
+
+    console.log(values);
+
+    const handleUpdateClose = () => {
+      setValues({});
+      setErrors({
+            exercise_routine_name: "",
+            day_1: "",
+            day_2: "",
+            day_3: "",
+            day_4: "",
+            day_5: "",
+            day_6: "",
+            day_7: "",
+        });
+      handleClose();
+    }
   const handleChange = (prop) => (event) => {
     setValues({ ...values, [prop]: event.target.value });
   };
 
-  return (
+  const handleCreate = () => {
+      setLoading(true);
+      setErrors({
+          exercise_routine_name: "",
+          day_1: "",
+          day_2: "",
+          day_3: "",
+          day_4: "",
+          day_5: "",
+          day_6: "",
+          day_7: "",
+      });
+
+      let isErrorExit = false;
+      let errorObject = {};
+
+      if(!values.exercise_routine_name){
+          errorObject.exercise_routine_name = "Routine Name is required";
+          isErrorExit = true;
+      }
+      if(!values.day_1){
+          errorObject.day_1 = "Day 1 is required";
+          isErrorExit = true;
+      }
+      if(!values.day_2){
+          errorObject.day_2 = "Day 2 is required";
+          isErrorExit = true;
+      }
+      if(!values.day_3){
+          errorObject.day_3 = "Day 3 is required";
+          isErrorExit = true;
+      }
+      if(!values.day_4){
+          errorObject.day_4 = "Day 4 is required";
+          isErrorExit = true;
+      }
+      if(!values.day_5){
+          errorObject.day_5 = "Day 5 is required";
+          isErrorExit = true;
+      }
+      if(!values.day_6){
+          errorObject.day_6 = "Day 6 is required";
+          isErrorExit = true;
+      }
+      if(!values.day_7){
+          errorObject.day_7= "Day 7 is required";
+          isErrorExit = true;
+      }
+
+      if(isErrorExit){
+          setErrors(errorObject);
+          setLoading(false);
+          return;
+      }
+      try{
+          console.log(values);
+          updateRoutine({ variables: {...values}});
+      }catch (e) {
+          console.log("error:", e.message);
+      }
+  }
+
+    return (
     <div>
       <Box
         sx={{
@@ -62,7 +176,7 @@ const UpdateRoutine = ({ handleClose, routineAlert, value }) => {
           Update Routine
         </Typography>
         <Button
-          onClick={handleClose}
+          onClick={handleUpdateClose}
           variant="contained"
           color="error"
           sx={{ mx: 4 }}
@@ -136,7 +250,7 @@ const UpdateRoutine = ({ handleClose, routineAlert, value }) => {
             size="large"
             sx={{ maxWidth: 100, mt: "1rem", left: "90%", height: 60 }}
             loading={loading}
-            // onClick={handleCreate}
+            onClick={handleCreate}
           >
             Update
           </LoadingButton>

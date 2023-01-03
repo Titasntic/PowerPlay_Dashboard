@@ -91,18 +91,41 @@ const CreateRoutine = ({ handleClose, routineAlert }) => {
     let isErrorExit = false;
     let errorObject = {};
 
-    if (values.exercise_routine_name) {
+    if (!values.exercise_routine_name) {
       errorObject.exercise_routine_name = "Routine name is required";
       isErrorExit = true;
     }
-    if (values.day_1) {
+    if (!values.day_1) {
       errorObject.day_1 = "day 1 is required";
+      isErrorExit = true;
+    }
+    if (!values.day_2){
+      errorObject.day_2 =  "day 2 is required";
+      isErrorExit = true;
+    }
+    if(!values.day_3){
+      errorObject.day_3 = "day 3 is required";
+      isErrorExit = true;
+    }
+    if (!values.day_4) {
+      errorObject.day_4 = "day 4 is required";
+      isErrorExit = true;
+    }
+    if (!values.day_5){
+      errorObject.day_5 =  "day 5 is required";
+      isErrorExit = true;
+    }
+    if(!values.day_6){
+      errorObject.day_6 = "day 6 is required";
+      isErrorExit = true;
+    }
+    if(!values.day_7){
+      errorObject.day_7 = "day 7 is required";
       isErrorExit = true;
     }
     if (isErrorExit) {
       setErrors(errorObject);
-      setLoading = false;
-      console.log(errorObject);
+      setLoading(false);
       return;
     }
     try {

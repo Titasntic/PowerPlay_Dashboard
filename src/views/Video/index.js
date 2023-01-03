@@ -562,7 +562,7 @@ const Index = () => {
                     <StyledTableCell>{row.target_period}</StyledTableCell>
                     <StyledTableCell>{row.duration}</StyledTableCell>
                     <StyledTableCell>
-                      {row.promotion ? "yes" : "No"}
+                      {row.promotion ? "Yes" : "No"}
                     </StyledTableCell>
                     <StyledTableCell>
                       <Button

@@ -154,18 +154,20 @@ const UpdateVideo = ({ handleClose, videoAlert, video }) => {
   });
 
   useEffect(() => {
-    setValues({
-      main_type: video.main_type,
-      package_type: video.package_type,
-      promotion: video.promotion,
-      target_period: video.target_period,
-      thumbnail_image_url: video.thumbnail_image_url,
-      video_title: video.video_title,
-      video_url_a: video.video_url_a,
-      video_url_b: video.video_url_b,
-      duration: video.duration,
-      sub_name: video.sub_name,
-    });
+    if(video.main_type !== undefined){
+      setValues({
+        main_type: video.main_type,
+        package_type: video.package_type,
+        promotion: video.promotion,
+        target_period: video.target_period,
+        thumbnail_image_url: video.thumbnail_image_url,
+        video_title: video.video_title,
+        video_url_a: video.video_url_a,
+        video_url_b: video.video_url_b,
+        duration: video.duration,
+        sub_name: video.video_sub_type.sub_type_name,
+      });
+    }
     //console.log(video);
     //console.log(video[0].thumbnail_image_url);
     // setImagePreview(video.thumbnail_image_url);
@@ -185,6 +187,8 @@ const UpdateVideo = ({ handleClose, videoAlert, video }) => {
     video.duration,
     video.sub_name,
   ]);
+
+  console.log(values);
 
   const thumbnailImageChange = async (e) => {
     if (e.target.files && e.target.files[0]) {
