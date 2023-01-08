@@ -165,7 +165,7 @@ const UpdateVideo = ({ handleClose, videoAlert, video }) => {
         video_url_a: video.video_url_a,
         video_url_b: video.video_url_b,
         duration: video.duration,
-        sub_name: video.video_sub_type.sub_type_name,
+        sub_name: video.video_sub_type.id,
       });
     }
     //console.log(video);

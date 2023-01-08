@@ -18,6 +18,7 @@ export const ALL_VIDEOS = gql`
       video_url_a
       video_url_b
       video_sub_type {
+        id
         sub_type_name
       }
     }
